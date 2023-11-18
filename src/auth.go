@@ -25,13 +25,13 @@ import (
 	"golang.org/x/crypto/cryptobyte/asn1"
 )
 
-var authCheck = "defaultCheck"
-var prevCheck = "defaultCheck"
+var authCheck = "askdkakd2kd9ak29dk9adj9ja2d9"
+var prevCheck = "askdkakd2kd9ak29dk9adj9ja2d9"
 var charset = "abcdefghijklmnopqrstuvwxyz"
 
 func genAuthCheck() {
 	for {
-		n := rand.Intn(24) + 1
+		n := rand.Intn(24) + 40
 		randString := ""
 		for i := 0; i < n; i++ {
 			randString += string(charset[rand.Intn(len(charset))])
