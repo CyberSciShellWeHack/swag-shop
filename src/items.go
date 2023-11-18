@@ -62,7 +62,7 @@ func DeleteItem(ctx *gin.Context) {
 	}
 	itemId := ctx.Param("item")
 
-	_, err := db.Exec("DELETE FROM ITEMS WHERE id = '" + itemId + "'")
+	_, err := db.Exec(`DELETE FROM ITEMS WHERE id = $1`, itemId)
 	if err != nil {
 		log.Printf("failed to lookup item - %s", err)
 		ctx.String(http.StatusInternalServerError, err.Error())
@@ -114,7 +114,7 @@ func DescribeItem(ctx *gin.Context) {
 		Id: itemId,
 	}
 
-	err := db.QueryRow("SELECT * FROM ITEMS WHERE id = '"+itemId+"'").Scan(&item.Id, &item.Name, &item.Description, &item.ImageUrl, &item.Price)
+	err := db.QueryRow(`SELECT * FROM ITEMS WHERE id = $1`, itemId).Scan(&item.Id, &item.Name, &item.Description, &item.ImageUrl, &item.Price)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			ctx.String(http.StatusNotFound, ":(")
@@ -147,7 +147,7 @@ func BuyItem(ctx *gin.Context) {
 		Id: itemId,
 	}
 
-	err := db.QueryRow("SELECT * FROM ITEMS WHERE id = '"+itemId+"'").Scan(&item.Id, &item.Name, &item.Description, &item.ImageUrl, &item.Price)
+	err := db.QueryRow(`SELECT * FROM ITEMS WHERE id = $1`, itemId).Scan(&item.Id, &item.Name, &item.Description, &item.ImageUrl, &item.Price)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			ctx.String(http.StatusNotFound, ":(")

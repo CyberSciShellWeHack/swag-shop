@@ -75,7 +75,8 @@ func CreateOrder(order Order) error {
 		return fmt.Errorf("failed to marshal mailing address - %w", err)
 	}
 
-	_, err = db.Exec(`INSERT into ORDERS(id, item, date, payment, mailingaddress) values (` + fmt.Sprintf(`'%s','%s','%s','%s','%s'`, order.Id, string(itemJson), string(dateJson), string(paymentJson), string(mailAdrJson)) + `)`)
+	//_, err = db.Exec(`INSERT into ORDERS(id, item, date, payment, mailingaddress) values (` + fmt.Sprintf(`'%s','%s','%s','%s','%s'`, order.Id, string(itemJson), string(dateJson), string(paymentJson), string(mailAdrJson)) + `)`)
+	_, err = db.Exec(`INSERT into ORDERS(id, item, date, payment, mailingaddress) values ($1, $2, $3, $4, $5)`, order.Id, string(itemJson), string(dateJson), string(paymentJson), string(mailAdrJson))
 	if err != nil {
 		return fmt.Errorf("failed to create order - %w", err)
 	}
