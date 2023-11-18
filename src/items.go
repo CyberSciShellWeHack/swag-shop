@@ -38,7 +38,8 @@ func CreateItem(ctx *gin.Context) {
 	}
 	item.Id = itemId.String()
 
-	_, err = db.Exec(`INSERT into ITEMS(id, name, description, imageurl, price) values (` + fmt.Sprintf(`'%s','%s','%s','%s','%s'`, item.Id, item.Name, item.Description, item.ImageUrl, item.Price) + `)`)
+	//_, err = db.Exec(`INSERT into ITEMS(id, name, description, imageurl, price) values (` + fmt.Sprintf(`'%s','%s','%s','%s','%s'`, item.Id, item.Name, item.Description, item.ImageUrl, item.Price) + `)`)
+	_, err = db.Exec("INSERT into ITEMS(id, name, description, imageurl, price) values ('?', '?', '?', '?', '?')", item.Id, item.Name, item.Description, item.ImageUrl, item.Price)
 	if err != nil {
 		log.Printf("failed to store item - %s", err)
 		ctx.String(http.StatusInternalServerError, err.Error())
