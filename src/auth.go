@@ -75,14 +75,14 @@ func authorize(ctx *gin.Context) bool {
 	}
 
 	hash := sha256.Sum256([]byte(authCheck))
-	if VerifyASN(pk, hash[:], sig) {
+	if ecdsa.VerifyASN1(pk, hash[:], sig) {
 		return true
 	}
 	fmt.Printf("failed to verify signature for %s\n", authCheck)
 
 	// See if it is valid for our previous message
 	hash = sha256.Sum256([]byte(prevCheck))
-	return VerifyASN(pk, hash[:], sig)
+	return ecdsa.VerifyASN1(pk, hash[:], sig)
 }
 
 func readAdminPublicKey() (*ecdsa.PublicKey, error) {
