@@ -3,6 +3,10 @@ RUN apk update && apk upgrade
 RUN apk add build-base
 WORKDIR /src
 COPY ./src .
+
+# Allows docker to cache after downloads have occurred
+RUN go mod download
+
 # ENV GOCACHE=/root/.cache/go-build
 # If you can enable DOCKER_BUILDKIT=1
 # RUN --mount=type=cache,target="/root/.cache/go-build" go build -o shop main.go items.go orders.go auth.go
